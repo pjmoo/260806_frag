@@ -3,6 +3,7 @@ package org.example.frag.infra.repository;
 import lombok.RequiredArgsConstructor;
 import org.example.frag.domain.entity.MovieEntity;
 import org.example.frag.domain.repository.MovieRepository;
+import org.example.frag.infra.exception.NoMovieException;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -26,7 +27,11 @@ public class JpaMovieRepository implements MovieRepository {
 
     @Override
     public MovieEntity findById(Long id) {
-        return movieJpaRepository.findById(id).orElseThrow();
+        return movieJpaRepository.findById(id)
+//                .orElseThrow();
+                .orElseThrow(
+                        () -> new NoMovieException("id %d 는 없습니다".formatted(id)));
+        // NoSuchElementException
     }
 
     @Override

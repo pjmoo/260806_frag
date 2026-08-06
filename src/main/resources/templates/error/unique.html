@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="ko">
+<head th:replace="fragments/head :: head('중복 데이터', '뭔가 겹침')">
+</head>
+<body>
+<nav th:replace="fragments/nav :: nav('error')">
+</nav>
+<h1>409</h1>
+<section>
+    <p th:text="${errorMessage}"></p>
+    <!--  알아서 집어넣어지지 않음 (custom의 경우)  -->
+    <p th:text="${status}"></p>
+    <p th:text="${error}"></p>
+    <p th:text="${path}"></p>
+    <p th:text="${message}"></p>
+</section>
+</body>
+</html>
