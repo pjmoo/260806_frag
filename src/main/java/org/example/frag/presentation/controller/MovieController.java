@@ -43,8 +43,16 @@ public class MovieController {
     }
 
     @GetMapping("/{id}")
-    public String editMovie(@PathVariable Long id, Model model) {
+    public String findMovie(@PathVariable Long id, Model model) {
         model.addAttribute("movie", MovieViewDTO.fromDTO(movieService.findById(id)));
         return "movies/detail";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String editMovie(@PathVariable Long id, Model model) {
+        // 결과적으로 어차피 title, price가 있기 때문에 굳이 FormDTO로 안해도 ViewDTO로 파싱 가능
+        model.addAttribute("movie", MovieViewDTO.fromDTO(movieService.findById(id)));
+        model.addAttribute("movieId", id);
+        return "movies/new";
     }
 }
