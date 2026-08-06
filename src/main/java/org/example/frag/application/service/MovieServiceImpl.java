@@ -25,4 +25,9 @@ public class MovieServiceImpl implements MovieService {
     public List<MovieEntity> findAll() {
         return movieRepository.findAll();
     }
+
+    @Override
+    public MovieEntity findById(Long id) {
+        return movieRepository.findById(id);
+    }
 }

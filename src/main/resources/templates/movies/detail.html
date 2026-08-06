@@ -13,11 +13,11 @@
 <a href="/movies">영화 목록</a>
 <a href="/movies/new">영화 등록</a>
 <section>
-    <div th:each="movie : ${movies}">
-        <!--        [[${movie}]]-->
-        <p th:text="${movie.title}"></p>
-        <a th:href="@{/movies/{id}(id=${movie.id})}">자세히보기</a>
-    </div>
+    <p>[[${movie}]]</p>
+    <a th:href="@{/movies/{id}/edit(id=${movie.id})}">수정</a>
+    <form th:action="@{/movies/{id}/delete(id=${movie.id})}" th:method="post">
+        <button>삭제</button>
+    </form>
 </section>
 </body>
 </html>
