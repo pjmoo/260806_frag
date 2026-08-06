@@ -5,6 +5,8 @@ import org.example.frag.domain.entity.MovieEntity;
 import org.example.frag.domain.repository.MovieRepository;
 import org.springframework.stereotype.Repository;
 
+//@Primary
+//@Profile()
 @Repository
 @RequiredArgsConstructor
 public class JpaMovieRepository implements MovieRepository {
