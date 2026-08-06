@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="ko">
+<body>
+<nav th:fragment="nav(page)">
+    <h3>GIGABOX</h3>
+    <section>
+        <a th:unless="${page == 'main'}" th:href="@{/}">메인 화면</a>
+        <a th:if="${page != 'list'}" th:href="@{/movies}">영화 목록</a>
+        <a th:if="${page != 'new'}" th:href="@{/movies/new}">영화 등록</a>
+    </section>
+</nav>
+</body>
+</html>

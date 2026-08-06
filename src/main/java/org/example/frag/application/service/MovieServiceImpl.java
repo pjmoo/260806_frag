@@ -37,4 +37,11 @@ public class MovieServiceImpl implements MovieService {
         findById(entity.getId()); // 해당 id로 존재하는지 검사용
         movieRepository.update(entity);
     }
+
+    @Transactional
+    @Override
+    public void delete(Long id) {
+        findById(id); // 해당 id로 존재하는지 검사용
+        movieRepository.deleteById(id);
+    }
 }

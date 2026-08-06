@@ -1,0 +1,8 @@
+<!doctype html>
+<html lang="ko">
+<body>
+<div th:fragment="errorMsg(field)">
+    <p th:if="${#fields.hasErrors(field)}" th:text="${#fields.errors(field)}"></p>
+</div>
+</body>
+</html>

@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="ko">
+<head th:fragment="head(title, description)">
+    <title th:text="${title}"></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <meta name="og:title" th:content="${title}">
+    <meta name="og:description" th:content="${description}">
+</head>
+</html>

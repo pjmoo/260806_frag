@@ -18,6 +18,7 @@ public class BaseEntity {
     @Setter
     private Long id;
     @CreatedDate
+    @Column(updatable = false)
     private Instant createdAt;
     @LastModifiedDate
     private Instant updatedAt;

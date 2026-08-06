@@ -1,17 +1,11 @@
 <!doctype html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>기가박스에 오신 걸 환영합니다</title>
+<!--<head th:replace="fragments/head :: head('영화 추가', '영화를 추가합시다')">-->
+<head th:replace="fragments/head :: head(${movieId == null ? '영화 추가' : '영화 수정'}, ${movieId == null ? '영화 추가합시다' : '영화 수정합시다'})">
+    <!--  여기 들어가는 건 자리 표시  -->
 </head>
 <body>
-<h1>GIGABOX</h1>
-<a href="/">메인으로</a>
-<a href="/movies">영화 목록</a>
-<a href="/movies/new">영화 등록</a>
+<nav th:replace="fragments/nav :: nav(${movieId == null ? 'new' : 'edit'})"></nav>
 <section>
     <!--    th:action="@{/movies/new}" -->
     <form
@@ -20,13 +14,12 @@
             th:object="${movie}"
     >
         <label>제목 : <input th:field="*{title}"></label><br>
-        <div th:if="${#fields.hasErrors('title')}">
-            <p th:text="${#fields.errors('title')}"></p>
-        </div>
+        <!--        <div th:if="${#fields.hasErrors('title')}">-->
+        <!--            <p th:text="${#fields.errors('title')}"></p>-->
+        <!--        </div>-->
+        <div th:replace="fragments/errorMsg :: errorMsg('title')"></div>
         <label>가격 : <input th:field="*{price}" type="number"></label><br>
-        <div th:if="${#fields.hasErrors('price')}">
-            <p th:text="${#fields.errors('price')}"></p>
-        </div>
+        <div th:replace="fragments/errorMsg :: errorMsg('price')"></div>
         <!--        <button>등록</button>-->
         <button th:text="${movieId == null ? '등록' : '수정'}"></button>
         <a th:if="${movieId != null}" th:href="@{/movies/{id}(id=${id})}">돌아가기</a>

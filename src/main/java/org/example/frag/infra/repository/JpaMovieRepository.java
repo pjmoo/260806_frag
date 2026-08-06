@@ -33,4 +33,9 @@ public class JpaMovieRepository implements MovieRepository {
     public void update(MovieEntity entity) {
         movieJpaRepository.save(entity);
     }
+
+    @Override
+    public void deleteById(Long id) {
+        movieJpaRepository.deleteById(id);
+    }
 }

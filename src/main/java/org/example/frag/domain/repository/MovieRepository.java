@@ -12,4 +12,6 @@ public interface MovieRepository {
     MovieEntity findById(Long id);
 
     void update(MovieEntity entity);
+
+    void deleteById(Long id);
 }

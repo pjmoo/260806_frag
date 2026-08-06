@@ -12,4 +12,6 @@ public interface MovieService {
     MovieEntity findById(Long id);
 
     void update(MovieEntity entity);
+
+    void delete(Long id);
 }
