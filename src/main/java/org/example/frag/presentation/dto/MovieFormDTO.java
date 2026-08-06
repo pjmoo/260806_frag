@@ -15,4 +15,10 @@ public record MovieFormDTO(
                 .price(price)
                 .build();
     }
+
+    public MovieEntity toEntity(long id) {
+        MovieEntity entity = toEntity();
+        entity.setId(id);
+        return entity;
+    }
 }

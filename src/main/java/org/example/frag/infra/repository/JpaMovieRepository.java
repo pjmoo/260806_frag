@@ -28,4 +28,9 @@ public class JpaMovieRepository implements MovieRepository {
     public MovieEntity findById(Long id) {
         return movieJpaRepository.findById(id).orElseThrow();
     }
+
+    @Override
+    public void update(MovieEntity entity) {
+        movieJpaRepository.save(entity);
+    }
 }

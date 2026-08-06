@@ -55,4 +55,19 @@ public class MovieController {
         model.addAttribute("movieId", id);
         return "movies/new";
     }
+
+    @PostMapping("/{id}/edit")
+    public String updateMovie(
+            @PathVariable Long id,
+            @Validated @ModelAttribute("movie") MovieFormDTO movieFormDTO,
+            BindingResult bindingResult,
+            Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("movieId", id);
+            return "movies/new";
+        }
+        movieService.update(movieFormDTO.toEntity(id));
+//        return "redirect:/movies";
+        return "redirect:/movies/%d".formatted(id);
+    }
 }

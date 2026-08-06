@@ -30,4 +30,11 @@ public class MovieServiceImpl implements MovieService {
     public MovieEntity findById(Long id) {
         return movieRepository.findById(id);
     }
+
+    @Transactional
+    @Override
+    public void update(MovieEntity entity) {
+        findById(entity.getId()); // 해당 id로 존재하는지 검사용
+        movieRepository.update(entity);
+    }
 }

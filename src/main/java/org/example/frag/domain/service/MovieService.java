@@ -10,4 +10,6 @@ public interface MovieService {
     List<MovieEntity> findAll();
 
     MovieEntity findById(Long id);
+
+    void update(MovieEntity entity);
 }
