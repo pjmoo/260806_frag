@@ -6,6 +6,9 @@
 <body>
 <section th:insert="~{fragments/nav :: nav('list')}">
 </section>
+<section th:if="${errorMessage}">
+    <p th:text="${errorMessage}"></p>
+</section>
 <section>
     <div th:each="movie : ${movies}">
         <!--        [[${movie}]]-->

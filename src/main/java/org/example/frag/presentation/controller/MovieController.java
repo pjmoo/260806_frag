@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/movies")
@@ -34,11 +35,21 @@ public class MovieController {
     @PostMapping("/new")
     public String createMovie(
             @Validated @ModelAttribute("movie") MovieFormDTO movieFormDTO,
-            BindingResult bindingResult) {
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes) {
+        // 검증
         if (bindingResult.hasErrors()) {
             return "movies/new";
         }
-        movieService.insert(movieFormDTO.toEntity());
+        // 예외
+        try {
+            movieService.insert(movieFormDTO.toEntity());
+//        } catch (DataIntegrityViolationException e) {
+        } catch (Exception e) {
+            // org.springframework.dao.DataIntegrityViolationException
+            System.out.println(e.getClass().getName());
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+        }
         return "redirect:/movies";
     }
 
