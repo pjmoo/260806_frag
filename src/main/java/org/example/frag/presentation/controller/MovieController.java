@@ -3,6 +3,7 @@ package org.example.frag.presentation.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.frag.domain.service.MovieService;
 import org.example.frag.presentation.dto.MovieFormDTO;
+import org.example.frag.presentation.dto.MovieViewDTO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,7 +20,11 @@ public class MovieController {
     private final MovieService movieService;
 
     @GetMapping
-    public String index() {
+    public String index(Model model) {
+        model.addAttribute("movies",
+                movieService.findAll()
+                        .stream().map(MovieViewDTO::fromDTO)
+                        .toList());
         return "movies/list";
     }
 

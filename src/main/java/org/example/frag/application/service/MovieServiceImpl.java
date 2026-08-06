@@ -7,6 +7,8 @@ import org.example.frag.domain.service.MovieService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -17,5 +19,10 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public void insert(MovieEntity movieEntity) {
         movieRepository.insert(movieEntity);
+    }
+
+    @Override
+    public List<MovieEntity> findAll() {
+        return movieRepository.findAll();
     }
 }

@@ -5,6 +5,8 @@ import org.example.frag.domain.entity.MovieEntity;
 import org.example.frag.domain.repository.MovieRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 //@Primary
 //@Profile()
 @Repository
@@ -15,5 +17,10 @@ public class JpaMovieRepository implements MovieRepository {
     @Override
     public void insert(MovieEntity movieEntity) {
         movieJpaRepository.save(movieEntity);
+    }
+
+    @Override
+    public List<MovieEntity> findAll() {
+        return movieJpaRepository.findAll();
     }
 }
