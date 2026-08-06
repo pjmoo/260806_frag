@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="ko">
+<head th:replace="fragments/head :: head('무언가 잘못됐다', '하지만 우리는 대응하겠다')">
+</head>
+<body>
+<nav th:replace="fragments/nav :: nav('error')">
+</nav>
+<h1>5xx</h1>
+<section>
+    <p th:text="${status}"></p>
+    <p th:text="${error}"></p>
+    <p th:text="${path}"></p>
+    <p th:text="${message}"></p>
+</section>
+</body>
+</html>

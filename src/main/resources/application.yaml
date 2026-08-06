@@ -3,6 +3,10 @@ spring:
     name: frag
   profiles:
     active: dev,db
+  web:
+    error:
+      whitelabel:
+        enabled: false
 ---
 spring:
   config:

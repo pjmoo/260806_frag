@@ -1,4 +1,6 @@
 package org.example.frag.domain.entity;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -13,6 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = lombok.AccessLevel.PROTECTED)
 @AllArgsConstructor(access = lombok.AccessLevel.PROTECTED)
 public class MovieEntity extends BaseEntity {
+    @Column(unique = true)
     private String title;
     private int price;
 }
