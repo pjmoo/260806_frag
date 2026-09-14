@@ -1,5 +1,56 @@
 # 🎬 영화 관리 서비스 실습 정리 (Frag)
 
+<!-- workspace-readme-learning:start -->
+## 파일과 연결한 학습 안내
+
+아래 설명은 이 폴더의 실제 소스와 빌드 설정을 기준으로 정리했습니다. 기존 소개의 기능 설명은 연결된 파일과 함께 확인할 수 있습니다.
+
+### 주요 파일과 역할
+
+| 파일 | 역할과 읽을 내용 |
+| --- | --- |
+| [build.gradle](<build.gradle>) | Gradle 플러그인·JDK·의존성과 빌드 작업 설정 |
+| [src/main/java/org/example/frag/FragApplication.java](<src/main/java/org/example/frag/FragApplication.java>) | Spring Boot 애플리케이션 진입점 — `main` |
+| [src/main/java/org/example/frag/presentation/controller/MainController.java](<src/main/java/org/example/frag/presentation/controller/MainController.java>) | 요청 매핑·입력 바인딩과 응답 처리 — `index` |
+| [src/main/java/org/example/frag/presentation/controller/MovieController.java](<src/main/java/org/example/frag/presentation/controller/MovieController.java>) | 요청 매핑·입력 바인딩과 응답 처리 — `index`, `newMovie`, `createMovie` |
+| [src/main/java/org/example/frag/presentation/controller/MovieErrorController.java](<src/main/java/org/example/frag/presentation/controller/MovieErrorController.java>) | Java 타입과 동작 정의 — `handleNoMovie`, `handleException` |
+| [src/main/resources/templates/index.html](<src/main/resources/templates/index.html>) | 화면 구조·입력 폼·결과 표시 |
+| [src/main/java/org/example/frag/domain/repository/MovieRepository.java](<src/main/java/org/example/frag/domain/repository/MovieRepository.java>) | 데이터 저장·조회 인터페이스 또는 구현 |
+| [src/main/java/org/example/frag/domain/service/MovieService.java](<src/main/java/org/example/frag/domain/service/MovieService.java>) | 업무 처리와 외부 의존성 호출 |
+| [src/main/java/org/example/frag/infra/repository/JpaMovieRepository.java](<src/main/java/org/example/frag/infra/repository/JpaMovieRepository.java>) | 데이터 저장·조회 인터페이스 또는 구현 — `insert`, `findAll`, `findById` |
+| [src/main/java/org/example/frag/infra/repository/MovieJpaRepository.java](<src/main/java/org/example/frag/infra/repository/MovieJpaRepository.java>) | Spring Data의 엔티티 저장·조회 계약 |
+| [HELP.md](<HELP.md>) | 설계·학습·운영 내용을 설명하는 문서 |
+| [settings.gradle](<settings.gradle>) | 프로젝트 구성 자료 |
+| [src/main/java/org/example/frag/application/service/MovieServiceImpl.java](<src/main/java/org/example/frag/application/service/MovieServiceImpl.java>) | 업무 처리와 외부 의존성 호출 — `insert`, `findAll`, `findById` |
+| [src/main/java/org/example/frag/domain/entity/BaseEntity.java](<src/main/java/org/example/frag/domain/entity/BaseEntity.java>) | Java 타입과 동작 정의 |
+| [src/main/java/org/example/frag/domain/entity/MovieEntity.java](<src/main/java/org/example/frag/domain/entity/MovieEntity.java>) | DB 테이블과 대응하는 영속 엔티티 |
+| [src/main/java/org/example/frag/infra/config/JpaConfig.java](<src/main/java/org/example/frag/infra/config/JpaConfig.java>) | 빈 등록 또는 외부 설정 구성 |
+| [src/main/java/org/example/frag/infra/exception/NoMovieException.java](<src/main/java/org/example/frag/infra/exception/NoMovieException.java>) | Java 타입과 동작 정의 |
+| [src/main/java/org/example/frag/presentation/dto/MovieFormDTO.java](<src/main/java/org/example/frag/presentation/dto/MovieFormDTO.java>) | 입력·응답 데이터의 구조 — `MovieFormDTO`, `toEntity` |
+
+### 실행과 설정 확인
+
+- [build.gradle](<build.gradle>)의 플러그인과 의존성을 기준으로 구성합니다. 선언된 Java toolchain은 17입니다.
+- Windows에서는 저장소 루트에서 `.\gradlew.bat bootRun`을 사용합니다.
+- 환경 설정: [src/main/resources/application-db.yaml](<src/main/resources/application-db.yaml>), [src/main/resources/application.yaml](<src/main/resources/application.yaml>).
+- 코드·설정에서 참조하는 환경 변수 이름: `DB_HOST`, `DB_NAME`, `DB_PASSWORD`, `DB_PORT`, `DB_USERNAME`. 기본값과 필수 여부는 각 참조 위치에서 확인합니다.
+
+### 관련 PDF와 보충 설명
+
+- [7/2 강의](<../260629_ex/새 폴더/7-2/README.md>): 계층형·클린 아키텍처와 상태 관리의 책임 분리를 연결합니다.
+- [7/23 강의](<../260629_ex/새 폴더/7-23/README.md>): 엔티티·영속성 컨텍스트·연관관계와 N+1을 연결합니다.
+
+이 링크는 구현을 이해하기 위한 관련 기초 자료입니다. 해당 강의가 이 저장소의 모든 기능이나 이후 버전의 API를 설명한다는 뜻은 아닙니다.
+
+### 읽는 순서와 복습
+
+- 요청 처리 → 유스케이스·서비스 → 포트·저장소·외부 API의 의존 방향을 읽습니다. 외부 구현을 교체할 때 바뀌는 코드와 업무 규칙을 가진 코드가 구분되는지 확인합니다.
+- Entity와 Repository에서 시작해 Service의 트랜잭션 및 연관 객체 접근을 읽습니다. 변경 감지 시점, 지연 로딩과 SQL 횟수, DTO 변환의 경계를 확인합니다.
+
+테스트 소스가 포함되어 있습니다. 이 문서 수정 작업에서는 애플리케이션·DB·외부 API 테스트를 실행하지 않았으므로 실행 결과를 보장하는 기록은 아닙니다.
+
+<!-- workspace-readme-learning:end -->
+
 이 프로젝트는 Spring Boot, Spring Data JPA, Thymeleaf를 사용하여 영화 정보를 등록, 조회, 수정, 삭제(CRUD)할 수 있는 웹 서비스입니다. 
 
 오늘 실습한 핵심 내용들을 초보자의 눈높이에 맞춰 단계별로 정리했습니다.
@@ -92,3 +143,36 @@
 * **해결방법**: 
   1. 개발 환경이라면 데이터베이스 툴에서 **`DROP TABLE movies;`** 쿼리로 테이블을 완전히 지운 후 프로젝트를 재시작합니다.
   2. 서버가 켜지면서 새롭게 테이블을 만들고 `UNIQUE` 제약조건을 정상적으로 탑재하게 됩니다.
+
+<!-- pdf-til-supplement:start -->
+## TIL 부연 설명 — PDF와 연결하기
+
+기존 실습 내용을 이해하기 위한 PDF 기반 부연 설명이다. 아래 예시는 개념을 설명하기 위한 것이며, 이 프로젝트에서 실행해 관찰한 결과와는 구분한다. 페이지 번호는 표지를 포함한 PDF 순서다.
+
+함께 읽을 파일: [src/main/java/org/example/frag/FragApplication.java](<src/main/java/org/example/frag/FragApplication.java>) · [src/main/java/org/example/frag/presentation/controller/MainController.java](<src/main/java/org/example/frag/presentation/controller/MainController.java>) · [src/main/java/org/example/frag/presentation/controller/MovieController.java](<src/main/java/org/example/frag/presentation/controller/MovieController.java>)
+
+### 공통 조각을 재사용할 때의 경계
+
+프래그먼트는 여러 화면이 공유하는 메뉴·헤더 같은 조각이다. th:insert는 대상 요소 내부에 삽입하고 th:replace는 대상 요소 자체를 교체하므로 최종 태그 구조가 달라진다. 공통 조각에 필요한 값을 매개변수로 드러내면 특정 화면 모델에 숨어 있는 의존을 줄일 수 있다.
+
+**예시로 이해하기:** 메뉴의 현재 선택 항목이나 페이지 제목을 인자로 받도록 생각해 본다. 조각을 추출한 뒤 브라우저에 생성되는 HTML에서 중첩된 nav·div와 CSS 선택자의 변화를 확인한다. 공통화로 줄인 중복과 늘어난 결합을 함께 기록한다.
+
+근거: 402-3 레이아웃과 프래그먼트 — [10쪽](<../260629_ex/새 폴더/8-5/402-3_레이아웃과_프래그먼트.pdf#page=10>) · [12쪽](<../260629_ex/새 폴더/8-5/402-3_레이아웃과_프래그먼트.pdf#page=12>) · [13쪽](<../260629_ex/새 폴더/8-5/402-3_레이아웃과_프래그먼트.pdf#page=13>) · [16쪽](<../260629_ex/새 폴더/8-5/402-3_레이아웃과_프래그먼트.pdf#page=16>) · [24쪽](<../260629_ex/새 폴더/8-5/402-3_레이아웃과_프래그먼트.pdf#page=24>)
+
+### 형식 검증·업무 검증·DB 제약의 경계
+
+NotNull은 null 여부, NotEmpty는 비어 있음, NotBlank는 공백만 있는 문자열까지 검사한다. 형식 제약 중에는 null을 허용하는 것이 있어 필수 입력 규칙을 별도로 조합해야 한다. 폼 바인딩 오류를 읽는 BindingResult는 대상 매개변수 바로 뒤에 두고 실패 시 서비스 호출 전에 분기한다.
+
+**예시로 이해하기:** 가격에 문자가 들어온 것은 타입 변환 실패, 음수 가격은 값 제약 위반, 이미 판매된 물건의 재구매는 업무 규칙 위반이다. 이메일 중복을 먼저 조회해도 동시 가입을 완전히 막지 못하므로 DB의 UNIQUE 제약과 충돌 처리까지 연결해 이해한다.
+
+근거: 402-2 입력값 검증과 Bean Validation — [17쪽](<../260629_ex/새 폴더/8-5/402-2_입력값_검증과_Bean_Validation.pdf#page=17>) · [19쪽](<../260629_ex/새 폴더/8-5/402-2_입력값_검증과_Bean_Validation.pdf#page=19>) · [33쪽](<../260629_ex/새 폴더/8-5/402-2_입력값_검증과_Bean_Validation.pdf#page=33>) · [34쪽](<../260629_ex/새 폴더/8-5/402-2_입력값_검증과_Bean_Validation.pdf#page=34>) · [57쪽](<../260629_ex/새 폴더/8-5/402-2_입력값_검증과_Bean_Validation.pdf#page=57>) · [69쪽](<../260629_ex/새 폴더/8-5/402-2_입력값_검증과_Bean_Validation.pdf#page=69>)
+
+### 검증 실패와 예외 화면을 나누는 이유
+
+사용자가 입력을 고칠 수 있는 검증 실패는 입력값과 필드 오류를 보여 주는 폼으로 돌아가는 편이 자연스럽다. 존재하지 않는 자원이나 처리 실패는 예외 처리기로 모아 상태 코드와 화면을 정한다. 오류 페이지 파일만 있다고 응답 상태가 자동으로 의도한 값이 되는 것은 아니다.
+
+**예시로 이해하기:** 책이 없는 경우 404 상태와 오류 화면을 함께 반환하는지 확인한다. 공통 Advice가 처리할 수 있는 범위와 보안 필터에서 발생한 오류의 범위는 다르다. 화면에는 복구에 필요한 안내를, 서버 로그에는 원인과 요청 식별 정보를 남긴다.
+
+근거: 403 서버사이드 렌더링 예외 처리 — [7쪽](<../260629_ex/새 폴더/8-6/403_서버사이드_렌더링_예외_처리.pdf#page=7>) · [18쪽](<../260629_ex/새 폴더/8-6/403_서버사이드_렌더링_예외_처리.pdf#page=18>) · [19쪽](<../260629_ex/새 폴더/8-6/403_서버사이드_렌더링_예외_처리.pdf#page=19>) · [35쪽](<../260629_ex/새 폴더/8-6/403_서버사이드_렌더링_예외_처리.pdf#page=35>) · [38쪽](<../260629_ex/새 폴더/8-6/403_서버사이드_렌더링_예외_처리.pdf#page=38>)
+
+<!-- pdf-til-supplement:end -->
